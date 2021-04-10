@@ -16,5 +16,6 @@ mod+m and then type a character will create a mark on the currently focused cont
 mod+grave(`) then type a character will focus the previously marked container.
 
 ## Installation
+Arch Linux: install the [AUR package](https://aur.archlinux.org/packages/sway-marker-git/)
 
-Install rust, gtk and gtk-layer-shell and build with `cargo build --release`. The file will be in `target/release/sway-marker`.
+Manual: install rust, gtk and gtk-layer-shell and build with `cargo build --release`. The file will be in `target/release/sway-marker`.
