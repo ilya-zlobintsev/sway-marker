@@ -18,4 +18,6 @@ mod+grave(`) then type a character will focus the previously marked container.
 ## Installation
 Arch Linux: install the [AUR package](https://aur.archlinux.org/packages/sway-marker-git/)
 
-Manual: install rust, gtk and gtk-layer-shell and build with `cargo build --release`. The file will be in `target/release/sway-marker`.
+Binary: you can download a binary from the releases page
+
+Compiling: install rust, gtk and gtk-layer-shell and build with `cargo build --release`. The file will be in `target/release/sway-marker`.
