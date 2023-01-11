@@ -2,7 +2,7 @@ use clap::{
     app_from_crate, crate_authors, crate_description, crate_name, crate_version, Arg, SubCommand,
 };
 use gtk::{prelude::*, WindowType};
-use std::sync::{Arc, Mutex};
+use std::{cell::RefCell, rc::Rc};
 
 fn read_char(message: &str, markup: &str) -> char {
     gtk::init().expect("Failed to initialize gtk");
@@ -13,15 +13,16 @@ fn read_char(message: &str, markup: &str) -> char {
         Inhibit(false)
     });
 
-    let selected_char = Arc::new(Mutex::new(None));
+    let selected_char = Rc::new(RefCell::new(None));
 
     let selected_char_clone = selected_char.clone();
     window.connect_key_press_event(move |_, event_key| {
-        let ch = event_key.get_keyval().to_unicode().unwrap();
-
-        *selected_char_clone.lock().unwrap() = Some(ch);
-
-        gtk::main_quit();
+        if let Some(ch) = event_key.get_keyval().to_unicode() {
+            if ch.is_alphanumeric() {
+                selected_char_clone.replace(Some(ch));
+            }
+            gtk::main_quit();
+        }
         Inhibit(false)
     });
 
@@ -41,8 +42,13 @@ fn read_char(message: &str, markup: &str) -> char {
 
     gtk::main();
 
-    let selected_char = selected_char.lock().unwrap();
-    selected_char.expect("Missing character")
+    match selected_char.take() {
+        Some(c) => c,
+        None => {
+            println!("No char selected");
+            std::process::exit(0);
+        }
+    }
 }
 
 fn main() {
