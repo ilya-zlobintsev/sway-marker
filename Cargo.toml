@@ -3,7 +3,7 @@ name = "sway-marker"
 description = "Simple popup for using marks in Sway"
 repository = "https://github.com/ilyazzz/sway-marker"
 license = "GPLv3"
-version = "0.1.0"
+version = "0.3.0"
 authors = ["Ilya Zlobintsev <ilya.zl@protonmail.com>"]
 edition = "2018"
 
