@@ -1,6 +1,4 @@
-use clap::{
-    app_from_crate, crate_authors, crate_description, crate_name, crate_version, Arg, SubCommand,
-};
+use clap::{command, Arg, Command};
 use gtk::{prelude::*, WindowType};
 use std::{cell::RefCell, rc::Rc};
 
@@ -17,7 +15,7 @@ fn read_char(message: &str, markup: &str) -> char {
 
     let selected_char_clone = selected_char.clone();
     window.connect_key_press_event(move |_, event_key| {
-        if let Some(ch) = event_key.get_keyval().to_unicode() {
+        if let Some(ch) = event_key.keyval().to_unicode() {
             if ch.is_alphanumeric() {
                 selected_char_clone.replace(Some(ch));
             }
@@ -53,19 +51,19 @@ fn read_char(message: &str, markup: &str) -> char {
 
 fn main() {
     // Init clap arguments parser
-    let args = app_from_crate!()
+    let args = command!()
         .arg(
-            Arg::with_name("markup")
+            Arg::new("markup")
                 .long("markup")
-                .short("m")
+                .short('m')
                 .help("Pango markup used to format displayed message")
                 .default_value("<span font_desc='15'>{}</span>"),
         )
-        .subcommand(SubCommand::with_name("mark").about("Mark current window"))
-        .subcommand(SubCommand::with_name("goto").about("Jump to a marked window"))
+        .subcommand(Command::new("mark").about("Mark current window"))
+        .subcommand(Command::new("goto").about("Jump to a marked window"))
         .get_matches();
     // unwrap() never panics because "markup" has a default value
-    let markup = args.value_of("markup").unwrap();
+    let markup = args.get_one::<String>("markup").unwrap();
 
     // Open swayipc connection
     let mut sway_conn =
