@@ -17,6 +17,7 @@ mod+grave(`) then type a character will focus the previously marked container.
 
 ## Installation
 Arch Linux: install the [AUR package](https://aur.archlinux.org/packages/sway-marker-git/)
+openSUSE: available as a package on [OBS](https://build.opensuse.org/package/show/X11:Wayland/sway-marker): `zypper in sway-marker`
 
 Binary: you can download a binary from the releases page
 
